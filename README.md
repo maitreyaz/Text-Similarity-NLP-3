@@ -1,5 +1,5 @@
 # Text Similarity NLP Project using `Tfidfvectorizer` & `cosine_similarity`
-Live at 'Render' : https://precily-3.onrender.com/
+- Live at 'Render' : https://precily-3.onrender.com/.
 This project calculates similarities between 2 text inputs and returns a similarity score between 0 &amp; 1. Developed using NLP Techniques and deployed using Flask. We would use `Tfidfvectorizer` &amp; `cosine_similarity` for calculating the similarity between texts.
 
 Approach : 
