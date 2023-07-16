@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Text Similarity Prediction</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <style>
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    #form-group,
+    #resultDiv {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="navBar_root__1nRZh">
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <a href="/" class="navBar_logo_container__l-83i"><img src="precilylogo.png" alt="logo"
+          class="navBar_logo__3iDS3">
+        <!-- <p class="navBar_logo_text__3GNiR">Precily AI</p> -->
+      </a><button aria-controls="responsive-navbar-nav" type="button" aria-label="Toggle navigation"
+        class="navbar-toggler collapsed">
+        <span class="navbar-toggler-icon"></span></button>
+      <div class="navbar-collapse collapse" id="responsive-navbar-nav">
+        <div class="mr-auto navbar-nav"><a href="/#industries_section" data-rb-event-key="/#industries_section"
+            class="nav-link">Industries</a><a target="_blank" href="https://www.linkedin.com/company/precily/"
+            data-rb-event-key="https://www.linkedin.com/company/precily/" class="nav-link">Careers</a><a
+            href="/about-us" data-rb-event-key="/about-us" class="nav-link">About us</a><a href="#pricing"
+            data-rb-event-key="#pricing" class="nav-link">Resources</a></div>
+        <!-- <div class="navBar_btn_container__13HfK navbar-nav"><a href="/how-it-works"
+            class="navBar_how_it_works_btn__2vqyr">How it Works</a><a href="/request-demo"
+            class="navBar_how_it_works_btn__2vqyr">Request a demo</a></div> -->
+      </div>
+    </nav>
+  </div>
+
+
+  <div class="container">
+    <h1>Text Similarity Prediction</h1>
+
+    <form id="form-group">
+      <div class="form-group">
+        <label for="text1">Enter Text 1:</label><br>
+        <textarea id="text1" name="text1" rows="4" cols="50" placeholder="Enter Text1"></textarea><br><br>
+      </div>
+      <div class="form-group">
+        <label for="text2">Enter Text 2:</label><br>
+        <textarea id="text2" name="text2" rows="4" cols="50" placeholder="Enter Text2"></textarea><br><br>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Predict</button>
+    </form>
+
+    <div id="resultDiv" style="display: none;">
+      <h3>Similarity Score:</h3>
+      <p id="similarityScore"></p>
+    </div>
+  </div>
+
+  <script>
+    // Handle form submission
+    document.getElementById("form-group").addEventListener("submit", function (event) {
+      event.preventDefault(); // Prevent form submission
+
+      // Get the text inputs
+      var text1 = document.getElementById("text1").value;
+      var text2 = document.getElementById("text2").value;
+
+      // Create the request body with a timestamp
+      var requestBody = {
+        "text1": text1,
+        "text2": text2,
+        "timestamp": Date.now() // Add a timestamp
+      };
+
+      // Send a POST request to the Flask API endpoint
+      fetch("/api/predict", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(requestBody)
+      })
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (data) {
+          // Display the similarity score
+          document.getElementById("similarityScore").textContent = data["similarity score"];
+          document.getElementById("resultDiv").style.display = "block";
+        })
+        .catch(function (error) {
+          console.log("Error:", error);
+        });
+    });
+  </script>
+</body>
+
+</html>
